@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  VOTER
+}
+
+enum Status {
+  YES
+  NO
+}
+
+model User {
+  id            Int    @id @default(autoincrement())
+  fullname      String @unique @db.VarChar(255)
+  password      String @db.VarChar(255)
+  password_text String @db.VarChar(255)
+  role          Role   @default(VOTER)
+  status        Status @default(NO)
+
+  @@map("users")
+}
